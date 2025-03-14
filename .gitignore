@@ -1,2 +1,5 @@
 api_venvf/
+__pycache__/
 .env
+connection.py 
+tests.ipynb

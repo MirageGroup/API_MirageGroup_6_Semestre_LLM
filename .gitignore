@@ -3,3 +3,4 @@ __pycache__/
 .env
 connection.py 
 tests.ipynb
+venv

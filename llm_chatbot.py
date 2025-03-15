@@ -22,13 +22,19 @@ class Model:
         self.model = ChatGroq(model_name=model_name, temperature=temperature, api_key=api_key)
         self.history = ChatMessageHistory()
         self.history.add_message(self.system_message)
-
-    def chat(self, prompt: str) -> str:
+        
+    def chat(self, prompt: str):
         self.history.add_message(HumanMessage(content=prompt))
 
-        response = self.model.invoke(self.history.messages)
+        def stream_response():
+            response_content = ''
+            for chunk in self.model.stream(self.history.messages):
 
-        self.history.aadd_messages(AIMessage(content=response.content))
+                if chunk.content:
+                    response_content += chunk.content
+                    yield chunk.content
+
+            self.history.add_messages(AIMessage(content=response_content))
 
 
-        return response.content
+        return stream_response()

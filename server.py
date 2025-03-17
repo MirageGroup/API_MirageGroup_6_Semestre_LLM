@@ -14,6 +14,7 @@
 from llm_chatbot import Model
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi.response import StreamingResponse
 
 app = FastAPI()
 
@@ -25,20 +26,18 @@ class InputData(BaseModel):
 def predict(data: InputData):
     chatbot_qwen = Model()
     chatbot_deepseek = Model('deepseek-r1-distill-llama-70b')
-    
-    if data.llm_model == '':
-        return {"message": "Modelo não informado", "input": data.text}
+
     
     if data.text == '':
         return {"message": "texto não informado", "input": data.text}
     
 
-    if data.llm_model == 'model1':
+    if data.llm_model == 'model1' or data.llm_model == '':
         response = chatbot_qwen.chat(data.text)
-        return {"model": "model1", "response": response}
+        return StreamingResponse(response)
     elif data.llm_model == 'model2':
         response = chatbot_deepseek.chat(data.text)
-        return {"model": "model2", "response": response}
+        return StreamingResponse(response)
     else:
         return {"message": "Modelo não reconhecido", "input": data.text}
     

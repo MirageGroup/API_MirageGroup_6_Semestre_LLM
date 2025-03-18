@@ -14,12 +14,12 @@
 from llm_chatbot import Model
 from fastapi import FastAPI
 from pydantic import BaseModel
-from fastapi.response import StreamingResponse
+from fastapi.responses import StreamingResponse
 
 app = FastAPI()
 
 class InputData(BaseModel):
-    llm_model:str
+    llm_model: str = ''
     text: str
 
 @app.post("/predict")
@@ -42,4 +42,4 @@ def predict(data: InputData):
         return {"message": "Modelo não reconhecido", "input": data.text}
     
 
-# Para rodar o servidor: uvicorn main:app --reload
+# Para rodar o servidor: uvicorn server:app --reload

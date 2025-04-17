@@ -1,8 +1,8 @@
-from llm_chatbot import Model
+from models.llm_chatbot import Model
 
 chat1 = Model()
 chat2 = Model('deepseek-r1-distill-llama-70b')
 
-response = chat2.chat('Principais sintomas do Alzheimer')
+response = chat1.chat('Ele tem quanto tempo de vida?')
 for chunk in response:
     print(chunk, end="", flush=True)

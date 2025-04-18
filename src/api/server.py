@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-from ..models.strategies.systemMessage.PadrãoStrategy import PadrãoMessageStrategy
+from ..models.strategies.systemMessage.PadraoStrategy import PadrãoMessageStrategy
 
 from ..models.Model import Model
 from ..models.strategies.model.qwen_strategy import QwenModelStrategy

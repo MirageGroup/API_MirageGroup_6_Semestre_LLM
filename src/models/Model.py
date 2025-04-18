@@ -2,8 +2,11 @@
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain.schema import HumanMessage, AIMessage
 
+from ..models.strategies.model.base import ModelStrategy
+from ..models.strategies.systemMessage.base import SystemMessageStrategy
+
 class Model:
-    def __init__(self, model_strategy, system_message_strategy):
+    def __init__(self, model_strategy: ModelStrategy, system_message_strategy: SystemMessageStrategy):
         self.model = model_strategy.get_model()
         self.history = ChatMessageHistory()
 

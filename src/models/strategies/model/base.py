@@ -5,5 +5,6 @@ from typing import List, Iterator
 
 class ModelStrategy(ABC):
     @abstractmethod
-    def stream_response(self, messages: List[BaseMessage]) -> Iterator[str]:
+    def get_model(self) -> str:
+
         pass

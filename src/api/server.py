@@ -2,9 +2,9 @@ from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-from models.strategies.systemMessage.PadrãoStrategy import PadrãoMessageStrategy
+from ..models.strategies.systemMessage.PadrãoStrategy import PadrãoMessageStrategy
 
-from ..models.llm_chatbot import Model
+from ..models.Model import Model
 from ..models.strategies.model.qwen_strategy import QwenModelStrategy
 from ..models.strategies.model.deepseek_strategy import DeepseekModelStrategy
 

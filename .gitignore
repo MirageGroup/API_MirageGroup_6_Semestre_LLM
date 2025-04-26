@@ -1,5 +1,7 @@
 api_venvf/
 __pycache__/
+/data/client/
+
 .env
 connection.py 
 tests.ipynb

@@ -3,6 +3,7 @@ from langchain_groq import ChatGroq
 from .base import ModelStrategy
 import os
 
+
 class QwenModelStrategy(ModelStrategy):
     def __init__(self, model_name='qwen-qwq-32b', temperature=0.7):
         self.model_name = model_name

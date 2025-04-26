@@ -1,6 +1,6 @@
-
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain.schema import HumanMessage, AIMessage
+from src.retriever.retriever import augmented_prompt
 
 from ..models.strategies.model.base import ModelStrategy
 from ..models.strategies.systemMessage.base import SystemMessageStrategy
@@ -14,7 +14,7 @@ class Model:
         self.history.add_message(self.system_message)
 
     def chat(self, prompt: str):
-        self.history.add_message(HumanMessage(content=prompt))
+        self.history.add_message(HumanMessage(content=augmented_prompt(prompt)))
         return self._stream_response()
 
     def _stream_response(self):

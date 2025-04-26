@@ -3,6 +3,7 @@ from langchain_groq import ChatGroq
 from .base import ModelStrategy
 import os
 
+
 class DeepseekModelStrategy(ModelStrategy):
     def __init__(self, model_name='deepseek-r1-distill-llama-70b', temperature=0.7):
         self.model_name = model_name

@@ -1,3 +1,4 @@
+import src.config  # Carrega o .env logo no começo
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel

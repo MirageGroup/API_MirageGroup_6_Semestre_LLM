@@ -7,6 +7,7 @@ from ..models.strategies.systemMessage.base import SystemMessageStrategy
 
 class Model:
     def __init__(self, model_strategy: ModelStrategy, system_message_strategy: SystemMessageStrategy):
+        self.model_strategy = model_strategy
         self.model = model_strategy.get_model()
         self.history = ChatMessageHistory()
 
@@ -19,9 +20,20 @@ class Model:
 
     def _stream_response(self):
         response_content = ''
+        capturando = False  # Flag para controlar quando começar a exibir ao usuário
+
         for chunk in self.model.stream(self.history.messages):
             if chunk.content:
                 response_content += chunk.content
-                yield chunk.content
 
+                if not capturando:
+                    if '</think>' in chunk.content.lower():
+                        capturando = True
+                        depois_think = chunk.content.lower().split('</think>', 1)[-1]
+                        if depois_think.strip():
+                            yield depois_think
+                else:
+                    yield chunk.content
+
+        # No histórico: salva TODO o conteúdo (incluindo o <think>)
         self.history.add_messages(AIMessage(content=response_content))

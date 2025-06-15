@@ -2,6 +2,7 @@ import src.config  # Carrega o .env logo no começo
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
+import time 
 
 from ..models.strategies.systemMessage.PadraoStrategy import PadrãoMessageStrategy
 
@@ -17,8 +18,13 @@ class InputData(BaseModel):
 
 @app.post("/predict")
 def predict(data: InputData):
+    import time
+    from fastapi.responses import JSONResponse
+
     if not data.text:
         return {"message": "texto não informado", "input": data.text}
+
+    start = time.time()
 
     prompt_strategy = PadrãoMessageStrategy()
 
@@ -30,5 +36,14 @@ def predict(data: InputData):
         return {"message": "Modelo não reconhecido", "input": data.text}
 
     chatbot = Model(model_strategy, prompt_strategy)
-    response = chatbot.chat(data.text)
-    return StreamingResponse(response)
+    response = chatbot.chat(data.text)  # supondo que retorne uma string ou objeto serializável
+
+    end = time.time()
+    tempo_execucao = end - start
+    
+
+    # Retorna JSON com o conteúdo da resposta + tempo
+    return {
+        "response": response,
+        "tempo_execucao": tempo_execucao
+    }
